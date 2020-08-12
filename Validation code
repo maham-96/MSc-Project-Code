@@ -3,7 +3,7 @@
 
 import re
 
-with open("C:\\Users\\maham_000\\OneDrive\\bioinformatics\\MSc Project\\TXT\\LUZY.txt","r") as f:
+with open(" ","r") as f:
     string = f.read()
 
 #Splitting at | and -
