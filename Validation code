@@ -1,50 +1,88 @@
-# MSc-Project
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug 12 11:59:00 2020
+
+@author: maham_000
+"""
 
 
 import re
 
-with open(" ","r") as f:
-    string = f.read()
-
-#Splitting at | and -
-result = string.split("|")
-print(result[0])
-
-y = result[0].split("-")
-print(y[0])
-
-
-for i in range(len(y)):
-    print(y[i])
-
-#Domain validity    
-    Domain = '^(VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)'
-    domainmatch = re.match(Domain,y[i], re.IGNORECASE)
+with open("C:\\Users\\maham_000\\OneDrive\\bioinformatics\\MSc Project\\TXT\\possible domains.txt","r") as f:
+    antibodyformat = f.read()
     
-    if domainmatch:
-        print('Valid Domains')
-    else:
-        print('Invalid Domains')
+
+def splitter(stringformat):
+    
+#Splitting at chain at | 
+    global chain
+    chain = stringformat.split("|")
+    print(chain)
+    
+    
+    for i in  range(len(chain)):
+        domain.append(chain[i].split("-"))
+    
+    
+    print(domain)
+    return chain
+#To split the string
+
+
+
+def validator(domain):
+    for i in range(len(domain)):
+        for x in range(len(domain[i])):
+            
+            
         
-    
-#specificity validity  
-    specificity = '(VL\D|VH\D|)'
-    specificitymatch =  re.search(specificity,y[i], re.IGNORECASE)
-    
-    if specificitymatch:
-          print('Valid Specificity')
+        #Domain validity    
+            exisitingDomain = '^(\s*VL|\s*CL|\s*VH|\s*CH1|\s*H|\s*CH2|\s*CH3|\s*CH4|\s*L|\s*X)' #\s* ignores any whitespaces 
+            domainmatch = re.match(exisitingDomain,domain[i][x], re.IGNORECASE)
+            print(domain[i][x])
+            if domainmatch:
+                print('Valid Domain')
+            else:
+                print('Invalid Domain')
+                
+     
+        #specificity validity  
+            specificity = '(VL\.\D|VH\D|)'
+            specificitymatch =  re.search(specificity,y[i], re.IGNORECASE)
+            
+            if specificitymatch:
+                  print('Valid Specificity')
+                  
+            else:
+                print('Invalid Specificity')
+                
+  
+              
+              
+        #Id and intercation validity       
+            id_interaction = '(\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
+            id_only = '(\([1-9][0-9]?|100)\)'
+            idmatch =  re.compile('(%s|%s)' % (id_interaction,id_only)).findall(y[i])
+            
+            if idmatch:
+                  print('Valid Identifier or Valid Identifier and interaction(s)')
+                  
+            else :
+                  print('Invalid Identifier or invalid Identifier and interaction(s)')
+                  
+                              
+        #Hinge region disulphide validity        
+            hinge = '(H\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
+            disulphide = '(\{[1-2]}\)'
+            match =  re.compile('(%s|%s)' % (hinge, disulphide)).findall(y[i])
+             
+            if match:
+                      print('Valid Hinge and disulphide bond')
+                      
+            else :
+                     print('Invalid Hinge and disulphide bond')
+'''
+domain = []
+splitter(antibodyformat)                   
+validator(domain)       
           
-    else:
-        print('Invalid Specificity')
-        
-      
-#Id and intercation validity       
-    id_interaction = '(\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
-    id_only = '(\([1-9][0-9]?|100)\)'
-    idmatch =  re.compile('(%s|%s)' % (id_interaction,id_only)).findall(y[i])
-    
-    if idmatch:
-          print('Valid Identifier or Valid Identifier and interaction(s)')
-          
-    else :
-          print('Invalid Identifier or invalid Identifier and interaction(s)')  
