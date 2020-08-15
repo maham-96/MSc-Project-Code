@@ -37,8 +37,8 @@ def validator(domain):
             
         
         #Domain validity    
-            exisitingDomain = '^(\s*VL|\s*CL|\s*VH|\s*CH1|\s*H|\s*CH2|\s*CH3|\s*CH4|\s*L|\s*X)' #\s* ignores any whitespaces 
-            domainmatch = re.match(exisitingDomain,domain[i][x], re.IGNORECASE)
+            domaintype = '^(\s*VL|\s*CL|\s*VH|\s*CH1|\s*H|\s*CH2|\s*CH3|\s*CH4|\s*L|\s*X)' #\s* ignores any whitespaces 
+            domainmatch = re.match(domaintype,domain[i][x], re.IGNORECASE)
             print(domain[i][x])
             if domainmatch:
                 print('Valid Domain')
@@ -46,8 +46,8 @@ def validator(domain):
                 print('Invalid Domain')
                 
      
-        #specificity validity  
-            specificity = '(VL\.[a-z]|CL\.[a-z]|VH\.[a-z]|CH1\.[a-z]|CH3\.[a-z]|CH4\.[a-z]|L\.[a-z]|X\.[a-z])'
+        #specificity validity where there could be no specificity, one or more specificities 
+            specificity = '(VL\.[a-z]|CL\.[a-z]|VH\.[a-z]|CH1\.[a-z]|CH3\.[a-z]|CH4\.[a-z]|L\.[a-z]|X\.[a-z]|VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)'
             specificitymatch =  re.search(specificity,domain[i][x], re.IGNORECASE)
             
             if specificitymatch:
@@ -59,7 +59,7 @@ def validator(domain):
   
               
 '''              
-        #Id and interaction validity       
+        #Domain identifiers and interaction validity where a domain may not have an identifier, or has identifier only, or has identifier with one or more interactions      
             id_interaction = '(\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
             id_only = '(\([1-9][0-9]?|100)\)'
             idmatch =  re.compile('(%s|%s)' % (id_interaction,id_only)).findall(y[i])
