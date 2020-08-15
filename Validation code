@@ -47,8 +47,8 @@ def validator(domain):
                 
      
         #specificity validity  
-            specificity = '(VL\.\D|VH\D|)'
-            specificitymatch =  re.search(specificity,y[i], re.IGNORECASE)
+            specificity = '(VL\.[a-z]|CL\.[a-z]|VH\.[a-z]|CH1\.[a-z]|CH3\.[a-z]|CH4\.[a-z]|L\.[a-z]|X\.[a-z])'
+            specificitymatch =  re.search(specificity,domain[i][x], re.IGNORECASE)
             
             if specificitymatch:
                   print('Valid Specificity')
@@ -58,8 +58,8 @@ def validator(domain):
                 
   
               
-              
-        #Id and intercation validity       
+'''              
+        #Id and interaction validity       
             id_interaction = '(\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
             id_only = '(\([1-9][0-9]?|100)\)'
             idmatch =  re.compile('(%s|%s)' % (id_interaction,id_only)).findall(y[i])
