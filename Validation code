@@ -1,41 +1,23 @@
-# -*- coding: utf-8 -*-
 """
-Created on Wed Aug 12 11:59:00 2020
 
 @author: maham_000
 """
 
 
 import re
-
-with open("C:\\Users\\maham_000\\OneDrive\\bioinformatics\\MSc Project\\TXT\\possible domains.txt","r") as f:
-    antibodyformat = f.read()
+f = open(" ","r")
+antibodydescriptor = f.read()
     
 
-def splitter(stringformat):
-    
-#Splitting at chain at | 
-    global chain
-    chain = stringformat.split("|")
-    print(chain)
-    
-    
-    for i in  range(len(chain)):
-        domain.append(chain[i].split("-"))
-    
-    
-    print(domain)
-    return chain
-#To split the string
+domains = re.split('\| |,|-', antibodydescriptor)
+#print(re.split('\| |,|-', antibodydescriptor))
 
-
+           
 
 def validator(domain):
     for i in range(len(domain)):
-        for x in range(len(domain[i])):
-            
-            
-        
+           
+ '''        
         #Domain validity    
             domaintype = '^(\s*VL|\s*CL|\s*VH|\s*CH1|\s*H|\s*CH2|\s*CH3|\s*CH4|\s*L|\s*X)' #\s* ignores any whitespaces 
             domainmatch = re.match(domaintype,domain[i][x], re.IGNORECASE)
@@ -57,8 +39,7 @@ def validator(domain):
                 print('Invalid Specificity')
                 
   
-              
-'''              
+                      
         #Domain identifiers and interaction validity where a domain may not have an identifier, or has identifier only, or has identifier with one or more interactions      
             id_interaction = '(\([1-9][0-9]?|100)\W([1-9][0-9]?|100+)\)*'
             id_only = '(\([1-9][0-9]?|100)\)'
@@ -82,7 +63,5 @@ def validator(domain):
             else :
                      print('Invalid Hinge and disulphide bond')
 '''
-domain = []
-splitter(antibodyformat)                   
-validator(domain)       
+validator(domains)    
           
