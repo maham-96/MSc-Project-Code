@@ -1,66 +1,41 @@
-"""
-
-@author: maham_000
-"""
-
 
 import re
-f = open(" ","r")
+import os, sys
+path = os.path.dirname(sys.argv[0])
+
+
+f = open(".txt","r")
 antibodydescriptor = f.read()
+
+removespace = re.compile(r'\s+')
+antibodydescriptor = re.sub(removespace, '', antibodydescriptor)
+
+
+chains = antibodydescriptor.split("|")
+
+domains = []
+for chain in chains:
+    domainSplit = chain.split("-")
+    domains.append(domainSplit)
     
-
-domains = re.split('\| |,|-', antibodydescriptor)
-#print(re.split('\| |,|-', antibodydescriptor))
-def validator(domain):
-    for i in range(len(domain)):
-                      
-           
-#Domain validity    #\s* ignores any whitespaces 
-            domaintype = '^(\s*VL|\s*CL|\s*VH|\s*CH1|\s*H|\s*CH2|\s*CH3|\s*CH4|\s*L|\s*X)' 
-            domainmatch = re.match(domaintype,domains[i], re.IGNORECASE)
-            print(domain[i])
-            if domainmatch:
-                
-                domainmatched = 'Valid Domain'
-                
-                
-            else:
-                domainmatched = 'Invalid Domain'
-
-#specificity validity where there could be no specificity, one or more specificities 
-            specificity = '(VL\.[a-z]|CL\.[a-z]|VH\.[a-z]|CH1\.[a-z]|CH3\.[a-z]|CH4\.[a-z]|L\.[a-z]|X\.[a-z]|VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)'
-            specificitymatch =  re.match(specificity,domains[i], re.IGNORECASE)
-            
-            if specificitymatch:
-                  specificitymatched = 'Valid Specificity'
-                  
-            else:
-                specificitymatched = 'Invalid Specificity'
+for domain in domains:
+    for eachdomain in domain:
+        print(eachdomain)
         
-#Domain identifiers and interaction validity where a domain may not have an identifier, or has identifier only, or has identifier with one or more interactions      
         
-            id_only = '(\([1-9]|[1-9][0-9]|100)\)'
-            id_interaction = '(\([1-9][0-9]?|100)\:([1-9][0-9]?|100)\)'
-           # id_multiple_interactions = '(\([1-9][0-9]?|100)\:([1-9][0-9]?|100)(,[1-9][0-9]?|100)\)*' 
-            idmatch =  re.compile('(%s|%s)' % (id_only, id_interaction)).findall(domains[i])
+        domainname = '(^CL|CH1|H|CH2|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
+        #domainspecificity = '(^VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
+        validmatch = re.fullmatch(domainname, eachdomain, re.IGNORECASE)
+        if validmatch:
+            print('Valid')
+        else:
+            print('invalid')
+        
             
-            if idmatch:
-                  idmatched = 'Valid Identifier or Valid Identifier and interaction(s)'
-                  
-            else :
-                  idmatched = 'Invalid Identifier or invalid Identifier and interaction(s)'
-              
-                 
-#Hinge region disulphide validity        
-            hinge = 'H\([1-9][0-9]?|100\):[1-9][0-9]?|100\{[1-2]\}' 
-            hingematch = re.search(hinge,domains[i], re.IGNORECASE)
-                     
-            if hingematch:
-                hingematched ='Valid Hinge and disulphide bond'
-                              
-            else :
-                hingematched = 'Invalid Hinge and disulphide bond'
-                
-            print(domainmatched, specificitymatched,idmatched,hingematched)
 
-validator(domains) 
+        domainspecificity = '(^VL|VH|CH3)[@+>_!*]?(?:\.[a-z]?[a-z])?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
+        validmatchspec = re.fullmatch(domainspecificity, eachdomain, re.IGNORECASE)
+        if validmatchspec:
+            print('Valid')
+        else:
+            print('invalid')
