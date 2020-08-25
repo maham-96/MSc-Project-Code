@@ -4,7 +4,7 @@ import os, sys
 path = os.path.dirname(sys.argv[0])
 
 
-f = open(".txt","r")
+f = open("correct.txt","r")
 antibodydescriptor = f.read()
 
 removespace = re.compile(r'\s+')
@@ -26,16 +26,10 @@ for domain in domains:
         domainname = '(^CL|CH1|H|CH2|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
         #domainspecificity = '(^VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
         validmatch = re.fullmatch(domainname, eachdomain, re.IGNORECASE)
-        if validmatch:
-            print('Valid')
-        else:
-            print('invalid')
-        
-            
-
         domainspecificity = '(^VL|VH|CH3)[@+>_!*]?(?:\.[a-z]?[a-z])?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
         validmatchspec = re.fullmatch(domainspecificity, eachdomain, re.IGNORECASE)
-        if validmatchspec:
+        
+        if validmatch or validmatchspec:
             print('Valid')
-        else:
-            print('invalid')
+            
+            
