@@ -1,16 +1,24 @@
+# -*- coding: utf-8 -*-
+
 
 import re
 import os, sys
 path = os.path.dirname(sys.argv[0])
 
 
-f = open("correct.txt","r")
+f = open("antibody.txt","r")
 antibodydescriptor = f.read()
+
+
+domainnumber = {}  
+
+#Removing any spaces  between domains and chains
 
 removespace = re.compile(r'\s+')
 antibodydescriptor = re.sub(removespace, '', antibodydescriptor)
 
 
+#splitting string at | and -
 chains = antibodydescriptor.split("|")
 
 domains = []
@@ -21,15 +29,43 @@ for chain in chains:
 for domain in domains:
     for eachdomain in domain:
         print(eachdomain)
+
+    
+# Domains without specificity 
         
+        domaintype = '(CL|CH1|H|CH2|CH4|L|X)[@+>_!*]?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[12]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[12]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
+                     #     DOMAIN NAME      //  MOD  //       (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
+        validmatch = re.fullmatch(domaintype, eachdomain, re.IGNORECASE)
+          
+# Domains with specificity
         
-        domainname = '(^CL|CH1|H|CH2|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
-        #domainspecificity = '(^VL|CL|VH|CH1|H|CH2|CH3|CH4|L|X)[@+>_!*]?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
-        validmatch = re.fullmatch(domainname, eachdomain, re.IGNORECASE)
-        domainspecificity = '(^VL|VH|CH3)[@+>_!*]?(?:\.[a-z]?[a-z])?(?:\([1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\))?(?:\([1-9][0-9]{0,1}\:[1-9][0-9]{0,1}\)(\{[12]\}))?'
+        domainspecificity = '(VL|VH|VH1|VH2|CH3)[@+>_!*]?(\.[a-z]*)?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[12]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[12]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
+                        #     DOMAIN NAME     //  MOD // SPECIFICITY //     (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatchspec = re.fullmatch(domainspecificity, eachdomain, re.IGNORECASE)
         
-        if validmatch or validmatchspec:
-            print('Valid')
-            
-            
+        if  validmatch or validmatchspec:
+            print('valid')
+           
+  
+# Checking if domain interactions match for e.g (1:3) and (3:1)
+
+        interactionnumber = '([1-9][0-9]?\:[1-9][0-9]?)'
+        interactionmatch = re.search(interactionnumber, eachdomain, re.IGNORECASE) 
+        if interactionmatch: # "if match was successful" / "if matched"
+            #print( m.group(1).split(":"))
+            key, value = interactionmatch.group(1).split(":")
+            domainnumber[key] = value
+
+          
+for key in domainnumber:
+    if domainnumber[key] in domainnumber:
+        a = domainnumber[key]
+        b = key
+        print('key:'+b)
+        print('value:'+a)
+        if domainnumber[a] == b:
+            print('key:'+a)
+            print('value:' + domainnumber[a])
+            print('valid')
+        
+       
