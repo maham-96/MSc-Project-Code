@@ -48,24 +48,25 @@ for domain in domains:
            
   
 # Checking if domain interactions match for e.g (1:3) and (3:1)
-
         interactionnumber = '([1-9][0-9]?\:[1-9][0-9]?)'
         interactionmatch = re.search(interactionnumber, eachdomain) 
-        if interactionmatch: # "if match was successful" / "if matched"
-            #print( m.group(1).split(":"))
+        
+        if interactionmatch:
             key, value = interactionmatch.group(1).split(":")
             domainnumber[key] = value
+            
 
-          
-for key in domainnumber:
-    if domainnumber[key] in domainnumber:
-        a = domainnumber[key]
-        b = key
-        print('key:'+b)
-        print('value:'+a)
-        if domainnumber[a] == b:
-            print('key:'+a)
-            print('value:' + domainnumber[a])
-            print('valid')
+# for (n:n1)
+
+ for key in domainnumber:
+        if domainnumber[key] in domainnumber:
+            a = domainnumber[key]
+            b = key
+            
+            if domainnumber[a] == b:
+                print('valid')
+                
+            else:
+               print('invalid')
         
        
