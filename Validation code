@@ -64,7 +64,7 @@ for domain in domains:
             b = key
             
             if domainnumber[a] == b:
-                print('valid')
+                print()
                 
             else:
                print('invalid')
