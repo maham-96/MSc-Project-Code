@@ -113,5 +113,4 @@ if counter_nonvalid == 0:
     print('The string is valid')
               
                
-     #  where u looking at value so if line 51, 
-     #  going through checking in line 62 say  value or inter =domainnumber[key], split on COMMA, and get list and iterate through list
+ 
