@@ -18,7 +18,6 @@ interactions_match =[]
 removespace = re.compile(r'\s+')
 antibodydescriptor = re.sub(removespace, '', antibodydescriptor)
 
-
 #splitting string at | and -
 chains = antibodydescriptor.split("|")
 counter_nonvalid = 0
@@ -30,13 +29,13 @@ for chain in chains:
 for domain in domains:
     for eachdomain in domain:
 
-        
        
 # Domains without specificity 
         
         domaintype = '(CL|CH1|H|CH2|CH4|L|X)[@+>_!*]?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[12]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[12]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
                      #     DOMAIN NAME      //  MOD  //       (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatch = re.fullmatch(domaintype, eachdomain, re.IGNORECASE)
+          
           
 # Domains with specificity
         
@@ -46,7 +45,8 @@ for domain in domains:
         
         if  validmatch or validmatchspec:
             
-                # Checking if domain interactions match for e.g (1:3) and (3:1) or (1:2)
+# Checking if domain interactions match, eng: (1:2,3 ) and (2:3,1) or (1:2) and (2:1)
+
             interactions= '(?:[1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?)|([1-9][0-9]?\:[1-9][0-9]?)'
             interactionmatch = re.search(interactions, eachdomain, re.IGNORECASE) 
         
