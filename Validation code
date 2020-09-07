@@ -5,7 +5,7 @@ from collections import defaultdict
 path = os.path.dirname(sys.argv[0])
 
 
-f = open("testingg.txt","r")
+f = open(".txt","r")
 antibodydescriptor = f.read()
 
 interactiondict = {}
@@ -17,6 +17,7 @@ removespace = re.compile(r'\s+')
 antibodydescriptor = re.sub(removespace, '', antibodydescriptor)
 
 # Splitting string at | and -
+
 chains = antibodydescriptor.split("|")
 counter_nonvalid = 0
 domains = []
@@ -62,6 +63,7 @@ for domain in domains:
                 interaction_Split = []
               
 # Storing the key with values and splitting at : and ,
+
                 for _ in range(len(interactions_match)):
                     interaction_Split.append(re.split(':|,',interactions_match[_]))
                     
@@ -73,7 +75,7 @@ for domain in domains:
                     else:
                         interactiondict[(interaction_Split[_][0])].append(interaction_Split[_][1])
                         
-# If validmatch or validspec                              
+# If not validmatch or validspec print invalid domains                              
         else:
             counter_nonvalid += 1
             print(eachdomain+' is an invalid domain')
@@ -112,7 +114,7 @@ for k,v in interactiondict.items():
                    if (domainnumber or interactionnumber[_])  in eachdomain:
                        print(eachdomain)
            
-              
+# If whole string is valid              
 if counter_nonvalid == 0:
     print('The string is valid')
               
