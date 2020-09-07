@@ -116,5 +116,5 @@ for k,v in interactiondict.items():
            
 # If whole string is valid              
 if counter_nonvalid == 0:
-    print('The string is valid')
+    print('This string is valid')
               
