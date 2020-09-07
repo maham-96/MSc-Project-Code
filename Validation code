@@ -97,7 +97,7 @@ for k,v in interactiondict.items():
            
            else:
                counter_nonvalid += 1  
-               print('Invalid')
+               #print('Invalid')
                print('The domain number '+domainnumber+' does not exist as an interaction number')
                for domain in domains:
                    for eachdomain in domain:
@@ -107,7 +107,6 @@ for k,v in interactiondict.items():
 # If interaction number does not exist as domain number then           
        else: 
            counter_nonvalid += 1
-           print('The domain number '+domainnumber+' does not exist as an interaction')
            print('The interaction '+interactionnumber[_]+  ' does not exist as a domain number')
            for domain in domains:
                for eachdomain in domain:
