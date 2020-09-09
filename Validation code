@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 import re
 import os, sys
 from collections import defaultdict
@@ -17,7 +17,6 @@ removespace = re.compile(r'\s+')
 antibodydescriptor = re.sub(removespace, '', antibodydescriptor)
 
 # Splitting string at | and -
-
 chains = antibodydescriptor.split("|")
 counter_nonvalid = 0
 domains = []
@@ -31,15 +30,15 @@ for domain in domains:
        
 # Domains without specificity 
         
-        domaintype = '(CL|CH1|H|CH2|CH4|L|X)([@+>_!*])*?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
-                     #     DOMAIN NAME      //  MOD  //       (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
+        domaintype = '(CL|CH1|H|CH2|CH4|L|X)([@+>_!*])*?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)'
+                     #     DOMAIN NAME     //  MOD    //       (n)           //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatch = re.fullmatch(domaintype, eachdomain, re.IGNORECASE)
           
           
 # Domains with specificity
         
-        domainspecificity = '(VL|VH|VH2|VL2|CH3)([@+>_!*])*?(\.[a-z]*)?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
-                        #     DOMAIN NAME     //  MOD // SPECIFICITY //     (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
+        domainspecificity = '(VL|VH|VH2|VL2|CH3)([@+>_!*])*?(\.[a-z]*)?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)'
+                        #     DOMAIN NAME     //  MOD   // SPECIFICITY //     (n)           //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}                //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatchspec = re.fullmatch(domainspecificity, eachdomain, re.IGNORECASE)
         
         if  validmatch or validmatchspec:
@@ -57,13 +56,15 @@ for domain in domains:
                      
                 
 # Creating key with empty values
+                
                 interactiondict = defaultdict(list)
                 
 # Creating list to store keys and values 
+                
                 interaction_Split = []
               
 # Storing the key with values and splitting at : and ,
-
+                
                 for _ in range(len(interactions_match)):
                     interaction_Split.append(re.split(':|,',interactions_match[_]))
                     
@@ -75,45 +76,48 @@ for domain in domains:
                     else:
                         interactiondict[(interaction_Split[_][0])].append(interaction_Split[_][1])
                         
-# If not validmatch or validspec print invalid domains                              
+# If not validmatch or validspec                              
         else:
             counter_nonvalid += 1
             print(eachdomain+' is an invalid domain')
+            break
      
 
 # Checking if keys and values in dictionary match
-for k,v in interactiondict.items():
+if counter_nonvalid == 0:
+    for k,v in interactiondict.items():
+        
+        domainnumber = str(k)
+        interactionnumber= interactiondict[domainnumber]
+        
+# If interaction number exists as a domain number 
+       
+        for _ in range(len(interactiondict[domainnumber])):
+           if interactionnumber[_] in interactiondict.keys():   
     
-    domainnumber = str(k)
-    interactionnumber= interactiondict[domainnumber]
-    
-# If interaction number exists as a domain number  
-   
-    for _ in range(len(interactiondict[domainnumber])):
-       if interactionnumber[_] in interactiondict.keys():   
-
-           if domainnumber in interactiondict[interactionnumber[_]]  :
-               pass
-           
-           else:
-               counter_nonvalid += 1  
-               #print('Invalid')
-               print('The domain number '+domainnumber+' does not exist as an interaction number')
+               if domainnumber in interactiondict[interactionnumber[_]]  :
+                   pass
+               
+               else:
+                   counter_nonvalid += 1  
+                   print('The domain number '+domainnumber+' does not exist as an interaction number')
+                   for domain in domains:
+                       for eachdomain in domain:
+                           if (domainnumber or interactionnumber[_])  in eachdomain:
+                               print('domain:')
+                               print(eachdomain)
+               
+# If interaction number does not exist as a domain number          
+           else: 
+               counter_nonvalid += 1
+               print('The interaction '+interactionnumber[_]+  ' does not exist as a domain number')
                for domain in domains:
                    for eachdomain in domain:
                        if (domainnumber or interactionnumber[_])  in eachdomain:
+                           print('domain:')
                            print(eachdomain)
-           
-# If interaction number does not exist as domain number then           
-       else: 
-           counter_nonvalid += 1
-           print('The interaction '+interactionnumber[_]+  ' does not exist as a domain number')
-           for domain in domains:
-               for eachdomain in domain:
-                   if (domainnumber or interactionnumber[_])  in eachdomain:
-                       print(eachdomain)
-           
-# If whole string is valid              
+        
+# If whole string is valid             
 if counter_nonvalid == 0:
     print('This string is valid')
               
