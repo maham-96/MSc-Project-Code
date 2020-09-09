@@ -9,7 +9,10 @@ domains that can be deemed correct; they use same interaction numbers multiple t
 (1:2) and (2:1), domain 1 matching with domain 2 and domain 2 matching with domain 1) is not taken into account.
 
 ### Validator programme:
-The is the main programme used to test the #####correct domain and interactions and #####incorrect domains and 
-interactions files. This programme looks for correct domain types as well as correct interaction matches (i.e 
-(1:2) and (2:1), domain 1 matches with domain 2 and domain 2 matches with domain 1).
+The is the main programme used to test the
+####correct domain and interactions file
+####incorrect domains and interactions file
+
+This programme looks for correct domain types as well as correct interaction matches (i.e (1:2) and (2:1), domain 1
+matches with domain 2 and domain 2 matches with domain 1).
 
