@@ -31,14 +31,14 @@ for domain in domains:
        
 # Domains without specificity 
         
-        domaintype = '(CL|CH1|H|CH2|CH4|L|X)([@+>_!*])*?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[12]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[12]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
+        domaintype = '(CL|CH1|H|CH2|CH4|L|X)([@+>_!*])*?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
                      #     DOMAIN NAME      //  MOD  //       (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatch = re.fullmatch(domaintype, eachdomain, re.IGNORECASE)
           
           
 # Domains with specificity
         
-        domainspecificity = '(VL|VH|VH1|VH2|CH3)([@+>_!*])*?(\.[a-z]*)?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[12]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[12]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
+        domainspecificity = '(VL|VH|VH2|VL2|CH3)([@+>_!*])*?(\.[a-z]*)?(((?:\([1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?\))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\))?(((?:\([1-9][0-9]?\:[1-9][0-9]?\)(\{[1-9]\}))?))?|(?:\([1-9][0-9]?\:[1-9][0-9]?,([1-9][0-9]*,)*[1-9][0-9]?\)(\{[1-9]\}))?))?((\[ANTI\:(CD3|[a-z-0-9_ ]*)\])?(\[MOD\:(ENHANCE FCRN|STRAND EXCHANGE ENGINEERED DOMAIN|[a-z-0-9_ ]*)\])?(\[TYPE\:(ZIPPER|FUSION|[a-z]*)\])?(\[LENGTH\:([1-9][0-9]*)\])?(\[NOTE\:(.+|[a-z]*\]))?)$'
                         #     DOMAIN NAME     //  MOD // SPECIFICITY //     (n)          //            (n:n1)               //                    (n:n1,n2....nth)                      //               (n:n1){disulphide}              //                       (n:n1,n2....nth)(n:n1){disulphide}              //                                                                  COMMENTS: ANTI, MOD, TYPE, LENGTH, NOTE..                                                                                    //
         validmatchspec = re.fullmatch(domainspecificity, eachdomain, re.IGNORECASE)
         
