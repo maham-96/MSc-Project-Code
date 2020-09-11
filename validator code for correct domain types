@@ -2,7 +2,7 @@ import re
 import os, sys
 path = os.path.dirname(sys.argv[0])
 
-f = open("neew.txt","r")
+f = open(".txt","r")
 antibodydescriptor = f.read()
 
 
